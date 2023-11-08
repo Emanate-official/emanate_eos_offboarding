@@ -1,24 +1,17 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import { UALContext } from "ual-reactjs-renderer";
 
 function App() {
+  const context = React.useContext(UALContext) as any;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="flex min-h-screen flex-col items-center justify-between p-24 bg-black text-white">
+      <button
+        className="border p-3 rounded"
+        onClick={() => context.showModal()}
+      >
+        Connect Wallet
+      </button>
     </div>
   );
 }
