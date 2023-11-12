@@ -53,8 +53,8 @@ function App() {
     console.log("growBalance: ", growBalance);
 
     setBalances({
-      staked: stakedBalance,
-      grow: growBalance,
+      staked: stakedBalance ?? "0 EMT",
+      grow: growBalance ?? "0 EMT",
     });
 
     setIsLoading(false);
@@ -66,8 +66,8 @@ function App() {
       code: "emanateoneos",
       scope: "emanateoneos",
       table: "accstakedb",
-      lower_bound: "airportseos1",
-      upper_bound: "airportseos1",
+      lower_bound: accountName,
+      upper_bound: accountName,
       limit: 1,
       reverse: false,
       show_payer: true,
@@ -80,8 +80,8 @@ function App() {
       code: "emanateoneos",
       scope: "emanateoneos",
       table: "accgrowdb",
-      lower_bound: "airportseos1",
-      upper_bound: "airportseos1",
+      lower_bound: accountName,
+      upper_bound: accountName,
       limit: 1,
       reverse: false,
       show_payer: true,
@@ -112,17 +112,6 @@ function App() {
         <button
           className="border p-3 rounded"
           onClick={async () => {
-            // const result = await api.transact({
-            //   actions: [
-            //     {
-            //       account: "emanateoneos",
-            //       name: "",
-            //       authorization: [],
-            //       data: {},
-            //     },
-            //   ],
-            // });
-            console.log("accountName: ", activeUser.accountName);
             if (activeUser?.accountName) {
               checkBalances(activeUser.accountName as string);
             }
@@ -139,18 +128,90 @@ function App() {
             <input
               className="text-black ml-4 h-8"
               readOnly
-              value={balances.staked ?? "0"}
+              value={balances.staked ?? "0 EMT"}
             />
-            <button className="ml-4 border px-4">Un-stake</button>
+            <button
+              className="ml-4 border px-4"
+              onClick={async () => {
+                try {
+                  const response = await activeUser.signTransaction(
+                    {
+                      actions: [
+                        {
+                          account: "emanateoneos",
+                          name: "unstake",
+                          authorization: [
+                            {
+                              actor: activeUser.accountName,
+                              permission: "active",
+                            },
+                          ],
+                          data: {
+                            owner: "11times1is11",
+                            balance: "10 EMT" ?? "0 EMT",
+                          },
+                        },
+                      ],
+                    },
+                    {
+                      blocksBehind: 3,
+                      expireSeconds: 120,
+                    }
+                  );
+
+                  console.log("Response: ", response);
+                } catch (error: any) {
+                  console.log("Error: ", error);
+                }
+              }}
+            >
+              Un-stake
+            </button>
           </div>
           <div className="mt-4 flex">
             Grow Balance:{" "}
             <input
               className="text-black ml-4 flex-shrink-0 h-8"
               readOnly
-              value={balances.grow ?? "0"}
+              value={balances.grow ?? "0 EMT"}
             />
-            <button className="ml-4 border px-4">Un-grow</button>
+            <button
+              onClick={async () => {
+                try {
+                  const response = await activeUser.signTransaction(
+                    {
+                      actions: [
+                        {
+                          account: "emanateoneos",
+                          name: "ungrow",
+                          authorization: [
+                            {
+                              actor: activeUser.accountName,
+                              permission: "active",
+                            },
+                          ],
+                          data: {
+                            owner: activeUser.accountName,
+                            balance: balances.grow ?? "0 EMT",
+                          },
+                        },
+                      ],
+                    },
+                    {
+                      blocksBehind: 3,
+                      expireSeconds: 120,
+                    }
+                  );
+
+                  console.log("Response: ", response);
+                } catch (error: any) {
+                  console.log("Error: ", error);
+                }
+              }}
+              className="ml-4 border px-4"
+            >
+              Un-grow
+            </button>
           </div>
         </div>
       )}

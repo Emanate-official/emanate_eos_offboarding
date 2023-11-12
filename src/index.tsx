@@ -42,15 +42,9 @@ const AppConsumer = withUAL(App);
 AppConsumer.displayName = "AppConsumer";
 
 root.render(
-  <React.StrictMode>
-    <UALProvider
-      chains={[myChain]}
-      authenticators={[anchor]}
-      appName={"Emanate"}
-    >
-      <AppConsumer />
-    </UALProvider>
-  </React.StrictMode>
+  <UALProvider chains={[myChain]} authenticators={[anchor]} appName={"Emanate"}>
+    <AppConsumer />
+  </UALProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
