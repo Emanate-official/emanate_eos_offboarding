@@ -3,6 +3,7 @@ import { UALContext } from "ual-reactjs-renderer";
 import { useBalances } from "hooks";
 import { Badge } from "components/Badge";
 import { Button } from "components/Button";
+import { Skeleton } from "components/Skeleton";
 
 export const SignedIn = () => {
   const { activeUser } = useContext(UALContext) as any;
@@ -35,8 +36,13 @@ export const SignedIn = () => {
           </Button>
         </div>
       )}
-      {isLoading && <div>Loading...</div>}
-      {balances && (
+      {/* {isLoading && <div>Loading...</div>} */}
+      <div className="flex space-x-2">
+        <Skeleton className="w-[100px] h-[30px] rounded-full" />
+        <Skeleton className="w-[100px] h-[30px]" />
+        <Skeleton className="w-[100px] h-[30px]" />
+      </div>
+      {/* {balances && (
         <div>
           <div className="flex">
             Staked Balance:{" "}
@@ -129,7 +135,7 @@ export const SignedIn = () => {
             </button>
           </div>
         </div>
-      )}
+      )} */}
     </section>
   );
 };
