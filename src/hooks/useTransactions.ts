@@ -5,6 +5,15 @@ import { getErrorMessage } from "utils";
 export const useTransactions = ({ activeUser }: { activeUser: AnchorUser }) => {
   const { toast } = useToast();
   const unstakeAction = async (accountName: string, balance: string) => {
+    if (!balance.includes("EMT")) {
+      toast({
+        title: "Whoops...",
+        variant: "error",
+        description: `Please include token symbol in input field with a space. Ex: 100 EMT`,
+      });
+      return;
+    }
+
     try {
       const response = await activeUser.signTransaction(
         {
@@ -42,6 +51,15 @@ export const useTransactions = ({ activeUser }: { activeUser: AnchorUser }) => {
   };
 
   const ungrowAction = async (accountName: string, balance: string) => {
+    if (!balance.includes("EMT")) {
+      toast({
+        title: "Whoops...",
+        variant: "error",
+        description: `Please include token symbol in input field with a space. Ex: 100 EMT`,
+      });
+      return;
+    }
+
     try {
       const response = await activeUser.signTransaction(
         {
