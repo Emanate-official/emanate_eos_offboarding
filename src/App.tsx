@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { UALContext } from "ual-reactjs-renderer";
 
 // Connect a Wallet, Check a Balance
@@ -11,12 +11,14 @@ function App() {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const context = useContext(UALContext) as any;
+  const { showModal, activeUser, logout } = useContext(UALContext) as any;
   // const rpc = new JsonRpc("https://eos.greymass.com");
 
-  const { activeUser } = context;
+  useEffect(() => {
+    logout();
+  }, []);
+
   console.log("Active User: ", activeUser);
-  console.log("context: ", context);
 
   const checkBalances = async (accountName: string) => {
     setIsLoading(true);
@@ -79,10 +81,7 @@ function App() {
   return (
     <div className="flex min-h-screen flex-col items-center p-24 bg-black text-white space-y-4">
       {!activeUser && (
-        <button
-          className="border p-3 rounded"
-          onClick={() => context.showModal()}
-        >
+        <button className="border p-3 rounded" onClick={() => showModal()}>
           Connect Wallet
         </button>
       )}

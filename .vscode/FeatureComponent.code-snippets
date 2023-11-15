@@ -1,0 +1,16 @@
+{
+  "FeatureComponent": {
+    "prefix": "eos-fc",
+    "body": [
+      "type ${1:$TM_FILENAME_BASE}Props = {",
+      "  children?: React.ReactNode;",
+      "};",
+      "",
+      "export const ${1:$TM_FILENAME_BASE} = (props: ${1:$TM_FILENAME_BASE}Props) => {",
+      "  return <div>${2:example}</div>;",
+      "};",
+      ""
+    ],
+    "description": "FeatureComponent"
+  }
+}
