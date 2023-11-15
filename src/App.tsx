@@ -1,8 +1,5 @@
-import { useEffect, useContext, useState } from "react";
-import "./App.css";
+import { useContext, useState } from "react";
 import { UALContext } from "ual-reactjs-renderer";
-import { JsonRpc, Api } from "eosjs";
-import { JsSignatureProvider } from "eosjs/dist/eosjs-jssig";
 
 // Connect a Wallet, Check a Balance
 
@@ -20,15 +17,6 @@ function App() {
   const { activeUser } = context;
   console.log("Active User: ", activeUser);
   console.log("context: ", context);
-
-  // useEffect(() => {
-  //   context.logout();
-  // }, []);
-
-  // const privateKey = "5KdeoVouxvBDU6mF3dQUc6XLpxATu2zzcP6y2wysnzSFfLmnmbM"; // use the private key of the person trying to unStake
-  // const privateKeys = [privateKey];
-  // const signatureProvider = new JsSignatureProvider(privateKeys); // Account paying for transaction
-  // const api = new Api({ rpc, signatureProvider });
 
   const checkBalances = async (accountName: string) => {
     setIsLoading(true);
