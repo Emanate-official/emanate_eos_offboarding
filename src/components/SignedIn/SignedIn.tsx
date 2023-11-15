@@ -4,14 +4,18 @@ import { useBalances } from "hooks";
 import { Badge } from "components/Badge";
 import { Button } from "components/Button";
 import { Skeleton } from "components/Skeleton";
+import { useToast } from "hooks";
+import { Coins, ExternalLink, Shrub } from "lucide-react";
+import { Balance } from "components/Balance";
 
 export const SignedIn = () => {
   const { activeUser } = useContext(UALContext) as any;
   const { accountName } = activeUser;
   const { isLoading, balances, checkBalances } = useBalances({ activeUser });
+  const { toast } = useToast();
 
   return (
-    <section className="flex justify-center items-center flex-col">
+    <section className="flex justify-center items-center flex-col w-full border">
       <div className="flex space-x-6">
         <span>Logged in as:</span>
         <Badge variant="outline" className="font-bold text-blue-400 text-sm">
@@ -30,18 +34,40 @@ export const SignedIn = () => {
               if (accountName) {
                 checkBalances(activeUser.accountName as string);
               }
+              // toast({
+              //   title: "Scheduled: Catch up",
+              //   description: "Friday, February 10, 2023 at 5:57 PM",
+              // });
             }}
           >
             Check Balances
           </Button>
         </div>
       )}
-      {/* {isLoading && <div>Loading...</div>} */}
-      <div className="flex space-x-2">
-        <Skeleton className="w-[100px] h-[30px] rounded-full" />
-        <Skeleton className="w-[100px] h-[30px]" />
-        <Skeleton className="w-[100px] h-[30px]" />
-      </div>
+      {isLoading && (
+        <div className="flex flex-col mb-10 w-full space-y-4">
+          <Skeleton className="h-[50px] w-[420px]" />
+          <Skeleton className="h-[50px] w-[420px]" />
+        </div>
+      )}
+
+      {balances && (
+        <div className="flex flex-col justify-center items-center w-full space-y-4 border">
+          <Balance
+            label="GROW"
+            balance={balances.grow}
+            table="accgrowdb"
+            accountName={accountName}
+          />
+          <Balance
+            label="STAKED"
+            balance={balances.staked}
+            table="accstakedb"
+            accountName={accountName}
+          />
+        </div>
+      )}
+
       {/* {balances && (
         <div>
           <div className="flex">
