@@ -1,5 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import { UALContext } from "ual-reactjs-renderer";
+import { SignedOut } from "components/SignedOut";
+import { SignedIn } from "components/SignedIn";
 
 // Connect a Wallet, Check a Balance
 
@@ -14,9 +16,9 @@ function App() {
   const { showModal, activeUser, logout } = useContext(UALContext) as any;
   // const rpc = new JsonRpc("https://eos.greymass.com");
 
-  useEffect(() => {
-    logout();
-  }, []);
+  // useEffect(() => {
+  //   logout();
+  // }, []);
 
   console.log("Active User: ", activeUser);
 
@@ -79,130 +81,10 @@ function App() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center p-24 bg-black text-white space-y-4">
-      {!activeUser && (
-        <button className="border p-3 rounded" onClick={() => showModal()}>
-          Connect Wallet
-        </button>
-      )}
-      {activeUser && (
-        <div>
-          Logged in as:
-          <input
-            className="text-black ml-4"
-            readOnly
-            value={activeUser.accountName}
-          />
-        </div>
-      )}
-      {activeUser && !isLoading && balances === null && (
-        <button
-          className="border p-3 rounded"
-          onClick={async () => {
-            if (activeUser?.accountName) {
-              checkBalances(activeUser.accountName as string);
-            }
-          }}
-        >
-          Check Balance
-        </button>
-      )}
-      {isLoading && <div>Loading...</div>}
-      {balances && (
-        <div>
-          <div className="flex">
-            Staked Balance:{" "}
-            <input
-              className="text-black ml-4 h-8"
-              readOnly
-              value={balances.staked ?? "0 EMT"}
-            />
-            <button
-              className="ml-4 border px-4"
-              onClick={async () => {
-                try {
-                  const response = await activeUser.signTransaction(
-                    {
-                      actions: [
-                        {
-                          account: "emanateoneos",
-                          name: "unstake",
-                          authorization: [
-                            {
-                              actor: activeUser.accountName,
-                              permission: "active",
-                            },
-                          ],
-                          data: {
-                            owner: "11times1is11",
-                            balance: "10 EMT" ?? "0 EMT",
-                          },
-                        },
-                      ],
-                    },
-                    {
-                      blocksBehind: 3,
-                      expireSeconds: 120,
-                    }
-                  );
-
-                  console.log("Response: ", response);
-                } catch (error: any) {
-                  console.log("Error: ", error);
-                }
-              }}
-            >
-              Un-stake
-            </button>
-          </div>
-          <div className="mt-4 flex">
-            Grow Balance:{" "}
-            <input
-              className="text-black ml-4 flex-shrink-0 h-8"
-              readOnly
-              value={balances.grow ?? "0 EMT"}
-            />
-            <button
-              onClick={async () => {
-                try {
-                  const response = await activeUser.signTransaction(
-                    {
-                      actions: [
-                        {
-                          account: "emanateoneos",
-                          name: "ungrow",
-                          authorization: [
-                            {
-                              actor: activeUser.accountName,
-                              permission: "active",
-                            },
-                          ],
-                          data: {
-                            owner: activeUser.accountName,
-                            balance: balances.grow ?? "0 EMT",
-                          },
-                        },
-                      ],
-                    },
-                    {
-                      blocksBehind: 3,
-                      expireSeconds: 120,
-                    }
-                  );
-
-                  console.log("Response: ", response);
-                } catch (error: any) {
-                  console.log("Error: ", error);
-                }
-              }}
-              className="ml-4 border px-4"
-            >
-              Un-grow
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
+    <main className="flex min-h-screen flex-col items-center p-24 bg-black text-white">
+      <h1 className="text-4xl pb-10">Emanate EMT Off Boarding </h1>
+      {!activeUser ? <SignedOut /> : <SignedIn />}
+    </main>
   );
 }
 
