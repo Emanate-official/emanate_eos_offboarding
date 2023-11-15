@@ -16,14 +16,18 @@ export const SignedIn = () => {
 
   return (
     <section className="flex justify-center items-center flex-col w-full">
+      {/* Logged in as Information */}
       <div className="flex space-x-6">
         <span>Logged in as:</span>
         <Badge variant="outline" className="font-bold text-blue-400 text-sm">
           {accountName}
         </Badge>
       </div>
+
+      {/* Border Spacer */}
       <div className="border w-full my-10"></div>
 
+      {/* Check Balance Button */}
       {activeUser && !isLoading && balances === null && (
         <div className="flex justify-center">
           <Button
@@ -40,6 +44,7 @@ export const SignedIn = () => {
           </Button>
         </div>
       )}
+      {/* Loading Skeleton */}
       {isLoading && (
         <div className="flex flex-col items-center mb-10 w-full space-y-4">
           <Skeleton className="h-[50px] w-[420px]" />
@@ -47,6 +52,7 @@ export const SignedIn = () => {
         </div>
       )}
 
+      {/* Balances Information */}
       {balances && (
         <div className="flex flex-col justify-center items-center w-full space-y-4">
           <Balance
@@ -64,6 +70,7 @@ export const SignedIn = () => {
         </div>
       )}
 
+      {/* UNSTAKE / UNGROW Options */}
       {balances && (
         <div className="text-white w-full space-y-5">
           <div className="border w-full my-10 text-white" />
@@ -85,101 +92,6 @@ export const SignedIn = () => {
           </div>
         </div>
       )}
-
-      {/* {balances && (
-        <div>
-          <div className="flex">
-            Staked Balance:{" "}
-            <input
-              className="text-black ml-4 h-8"
-              readOnly
-              value={balances.staked ?? "0 EMT"}
-            />
-            <button
-              className="ml-4 border px-4"
-              onClick={async () => {
-                try {
-                  const response = await activeUser.signTransaction(
-                    {
-                      actions: [
-                        {
-                          account: "emanateoneos",
-                          name: "unstake",
-                          authorization: [
-                            {
-                              actor: activeUser.accountName,
-                              permission: "active",
-                            },
-                          ],
-                          data: {
-                            owner: "11times1is11",
-                            balance: "10 EMT" ?? "0 EMT",
-                          },
-                        },
-                      ],
-                    },
-                    {
-                      blocksBehind: 3,
-                      expireSeconds: 120,
-                    }
-                  );
-
-                  console.log("Response: ", response);
-                } catch (error: any) {
-                  console.log("Error: ", error);
-                }
-              }}
-            >
-              Un-stake
-            </button>
-          </div>
-          <div className="mt-4 flex">
-            Grow Balance:{" "}
-            <input
-              className="text-black ml-4 flex-shrink-0 h-8"
-              readOnly
-              value={balances.grow ?? "0 EMT"}
-            />
-            <button
-              onClick={async () => {
-                try {
-                  const response = await activeUser.signTransaction(
-                    {
-                      actions: [
-                        {
-                          account: "emanateoneos",
-                          name: "ungrow",
-                          authorization: [
-                            {
-                              actor: activeUser.accountName,
-                              permission: "active",
-                            },
-                          ],
-                          data: {
-                            owner: activeUser.accountName,
-                            balance: balances.grow ?? "0 EMT",
-                          },
-                        },
-                      ],
-                    },
-                    {
-                      blocksBehind: 3,
-                      expireSeconds: 120,
-                    }
-                  );
-
-                  console.log("Response: ", response);
-                } catch (error: any) {
-                  console.log("Error: ", error);
-                }
-              }}
-              className="ml-4 border px-4"
-            >
-              Un-grow
-            </button>
-          </div>
-        </div>
-      )} */}
     </section>
   );
 };
