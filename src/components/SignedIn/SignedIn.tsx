@@ -23,6 +23,8 @@ export const SignedIn = () => {
           <Button
             variant="outline"
             onClick={() => {
+              // Only check balances if accountName is not null
+              // Triggering with an undefined or null value will cause an error.
               if (accountName) {
                 checkBalances(activeUser.accountName as string);
               }
