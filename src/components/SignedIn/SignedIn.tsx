@@ -1,4 +1,5 @@
 import { Badge } from "components/Badge";
+import { Button } from "components/Button";
 import { useContext } from "react";
 import { UALContext } from "ual-reactjs-renderer";
 
@@ -12,6 +13,9 @@ export const SignedIn = () => {
         <Badge variant="outline" className="font-bold text-blue-400 text-sm">
           {accountName}
         </Badge>
+      </div>
+      <div className="flex justify-center mt-10">
+        <Button variant="outline">Check Balance</Button>
       </div>
       {/* {activeUser && !isLoading && balances === null && (
         <button
