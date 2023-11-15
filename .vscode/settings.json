@@ -1,5 +1,12 @@
 {
   "editor.tabSize": 2,
   "editor.formatOnSave": true,
-  "cSpell.words": ["accgrowdb", "accstakedb", "emanateoneos", "lucide"]
+  "cSpell.words": [
+    "accgrowdb",
+    "accstakedb",
+    "emanateoneos",
+    "lucide",
+    "UNGROW",
+    "UNSTAKE"
+  ]
 }

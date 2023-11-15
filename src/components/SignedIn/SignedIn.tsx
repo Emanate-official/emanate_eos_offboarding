@@ -5,8 +5,8 @@ import { Badge } from "components/Badge";
 import { Button } from "components/Button";
 import { Skeleton } from "components/Skeleton";
 import { useToast } from "hooks";
-import { Coins, ExternalLink, Shrub } from "lucide-react";
 import { Balance } from "components/Balance";
+import { Input } from "components/Input";
 
 export const SignedIn = () => {
   const { activeUser } = useContext(UALContext) as any;
@@ -65,6 +65,28 @@ export const SignedIn = () => {
             table="accstakedb"
             accountName={accountName}
           />
+        </div>
+      )}
+
+      {balances && (
+        <div className="text-white w-full space-y-5">
+          <div className="border w-full my-10 text-white" />
+
+          <div className="flex items-center flex-col">
+            <h3 className="text-white pb-4 text-2xl">UNGROW EMT</h3>
+            <div className="flex space-x-4">
+              <Input className="w-40" placeholder="ex: 100 EMT" />
+              <Button variant="outline">UNGROW</Button>
+            </div>
+          </div>
+
+          <div className="flex items-center flex-col">
+            <h3 className="text-white pb-4 text-2xl">UNSTAKE EMT</h3>
+            <div className="flex space-x-4">
+              <Input className="w-40" placeholder="ex: 100 EMT" />
+              <Button variant="outline">UNSTAKE</Button>
+            </div>
+          </div>
         </div>
       )}
 
