@@ -10,16 +10,17 @@ export const SignedIn = () => {
   const { isLoading, balances, checkBalances } = useBalances({ activeUser });
 
   return (
-    <section className="flex justify-center items-center flex-col border">
-      <div className="flex space-x-6 pb-10">
+    <section className="flex justify-center items-center flex-col">
+      <div className="flex space-x-6">
         <span>Logged in as:</span>
         <Badge variant="outline" className="font-bold text-blue-400 text-sm">
           {accountName}
         </Badge>
       </div>
+      <div className="border w-full my-10"></div>
 
       {activeUser && !isLoading && balances === null && (
-        <div className="flex justify-center mt-10">
+        <div className="flex justify-center">
           <Button
             variant="outline"
             onClick={() => {
