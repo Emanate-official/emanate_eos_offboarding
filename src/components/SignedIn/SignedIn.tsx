@@ -1,33 +1,36 @@
-import { Badge } from "components/Badge";
-import { Button } from "components/Button";
 import { useContext } from "react";
 import { UALContext } from "ual-reactjs-renderer";
+import { useBalances } from "hooks";
+import { Badge } from "components/Badge";
+import { Button } from "components/Button";
 
 export const SignedIn = () => {
   const { activeUser } = useContext(UALContext) as any;
   const { accountName } = activeUser;
+  const { isLoading, balances, checkBalances } = useBalances({ activeUser });
+
   return (
-    <section>
-      <div className="flex space-x-6">
+    <section className="flex justify-center items-center flex-col border">
+      <div className="flex space-x-6 pb-10">
         <span>Logged in as:</span>
         <Badge variant="outline" className="font-bold text-blue-400 text-sm">
           {accountName}
         </Badge>
       </div>
-      <div className="flex justify-center mt-10">
-        <Button variant="outline">Check Balances</Button>
-      </div>
-      {/* {activeUser && !isLoading && balances === null && (
-        <button
-          className="border p-3 rounded"
-          onClick={async () => {
-            if (activeUser?.accountName) {
-              checkBalances(activeUser.accountName as string);
-            }
-          }}
-        >
-          Check Balance
-        </button>
+
+      {activeUser && !isLoading && balances === null && (
+        <div className="flex justify-center mt-10">
+          <Button
+            variant="outline"
+            onClick={() => {
+              if (accountName) {
+                checkBalances(activeUser.accountName as string);
+              }
+            }}
+          >
+            Check Balances
+          </Button>
+        </div>
       )}
       {isLoading && <div>Loading...</div>}
       {balances && (
@@ -123,7 +126,7 @@ export const SignedIn = () => {
             </button>
           </div>
         </div>
-      )} */}
+      )}
     </section>
   );
 };
