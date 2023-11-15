@@ -42,7 +42,7 @@ export const ActionOptions = () => {
         </div>
         {growResponse && (
           <TxSuccess
-            transactionId={growResponse.transactionId ?? "Unknown TX ID"}
+            transactionId={stakeResponse?.transactionId ?? "Unknown TX ID"}
           />
         )}
       </div>

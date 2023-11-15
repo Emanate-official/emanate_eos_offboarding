@@ -39,6 +39,7 @@ export const useBalances = ({ activeUser }: { activeUser: AnchorUser }) => {
       setIsLoading(false);
       toast({
         title: "Whoops...",
+        variant: "error",
         description: `There was an error checking balances: \n\n${getErrorMessage(
           error
         )}`,
