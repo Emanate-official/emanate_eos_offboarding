@@ -2,6 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import { UALContext } from "ual-reactjs-renderer";
 import { SignedOut } from "components/SignedOut";
 import { SignedIn } from "components/SignedIn";
+import { Toaster } from "components/Toast";
 
 // Connect a Wallet, Check a Balance
 
@@ -32,6 +33,7 @@ function App() {
         .
       </h4>
       {!activeUser ? <SignedOut /> : <SignedIn />}
+      <Toaster />
     </main>
   );
 }
