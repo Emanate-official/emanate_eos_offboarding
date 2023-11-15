@@ -1,3 +1,4 @@
+import { TooltipWrapper } from "components/Tooltip";
 import { Coins, ExternalLink, Shrub } from "lucide-react";
 import { cn } from "utils";
 
@@ -36,15 +37,17 @@ export const Balance = ({
             '"rounded p-1 cursor-pointer hover:bg-gray-500 hover:text-white"'
           )}
         >
-          <ExternalLink
-            size={14}
-            className="cursor-pointer"
-            onClick={() => {
-              window.open(
-                `https://bloks.io/account/emanateoneos?loadContract=true&tab=Tables&table=${table}&account=emanateoneos&scope=emanateoneos&limit=1&lower_bound=${accountName}&upper_bound=${accountName}`
-              );
-            }}
-          />
+          <TooltipWrapper content="Open Bloks Explorer">
+            <ExternalLink
+              size={14}
+              className="cursor-pointer"
+              onClick={() => {
+                window.open(
+                  `https://bloks.io/account/emanateoneos?loadContract=true&tab=Tables&table=${table}&account=emanateoneos&scope=emanateoneos&limit=1&lower_bound=${accountName}&upper_bound=${accountName}`
+                );
+              }}
+            />
+          </TooltipWrapper>
         </div>
       </div>
     </div>
