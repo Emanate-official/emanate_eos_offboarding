@@ -15,7 +15,7 @@ export const SignedIn = () => {
   const { toast } = useToast();
 
   return (
-    <section className="flex justify-center items-center flex-col w-full border">
+    <section className="flex justify-center items-center flex-col w-full">
       <div className="flex space-x-6">
         <span>Logged in as:</span>
         <Badge variant="outline" className="font-bold text-blue-400 text-sm">
@@ -31,14 +31,9 @@ export const SignedIn = () => {
             onClick={() => {
               // Only check balances if accountName is not null
               // Triggering with an undefined or null value will cause an error.
-              // if (accountName) {
-              //   checkBalances(activeUser.accountName as string);
-              // }
-              toast({
-                variant: "error",
-                title: "Scheduled: Catch up",
-                description: "Friday, February 10, 2023 at 5:57 PM",
-              });
+              if (accountName) {
+                checkBalances(activeUser.accountName as string);
+              }
             }}
           >
             Check Balances
@@ -46,14 +41,14 @@ export const SignedIn = () => {
         </div>
       )}
       {isLoading && (
-        <div className="flex flex-col mb-10 w-full space-y-4">
+        <div className="flex flex-col items-center mb-10 w-full space-y-4">
           <Skeleton className="h-[50px] w-[420px]" />
           <Skeleton className="h-[50px] w-[420px]" />
         </div>
       )}
 
       {balances && (
-        <div className="flex flex-col justify-center items-center w-full space-y-4 border">
+        <div className="flex flex-col justify-center items-center w-full space-y-4">
           <Balance
             label="GROW"
             balance={balances.grow}
