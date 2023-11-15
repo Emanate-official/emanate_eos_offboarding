@@ -1,5 +1,6 @@
 import type { AnchorUser } from "ual-anchor";
 import { useToast } from "./useToast";
+import { getErrorMessage } from "utils";
 
 export const useTransactions = ({ activeUser }: { activeUser: AnchorUser }) => {
   const { toast } = useToast();
@@ -31,10 +32,11 @@ export const useTransactions = ({ activeUser }: { activeUser: AnchorUser }) => {
       );
 
       console.log("Response: ", response);
-    } catch (error: any) {
+    } catch (error) {
       toast({
         title: "Whoops...",
-        description: `Error: \n\n${error}`,
+        variant: "error",
+        description: `Error: \n\n${getErrorMessage(error)}`,
       });
     }
   };
@@ -70,7 +72,8 @@ export const useTransactions = ({ activeUser }: { activeUser: AnchorUser }) => {
     } catch (error: any) {
       toast({
         title: "Whoops...",
-        description: `Error: \n\n${error}`,
+        variant: "error",
+        description: `Error: \n\n${getErrorMessage(error)}`,
       });
     }
   };

@@ -1,7 +1,10 @@
 import { useMemo, useState } from "react";
 import { AnchorUser } from "ual-anchor";
+import { useToast } from "./useToast";
+import { getErrorMessage } from "utils";
 
 export const useBalances = ({ activeUser }: { activeUser: AnchorUser }) => {
+  const { toast } = useToast();
   const [balances, setBalances] = useState<{
     staked: null | string;
     grow: null | string;
@@ -10,27 +13,37 @@ export const useBalances = ({ activeUser }: { activeUser: AnchorUser }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const checkBalances = async (accountName: string) => {
-    setIsLoading(true);
-    const [stakedResponse, growResponse] = await Promise.all([
-      fetchStakedBalance(accountName),
-      fetchGrowBalance(accountName),
-    ]);
+    try {
+      setIsLoading(true);
+      const [stakedResponse, growResponse] = await Promise.all([
+        fetchStakedBalance(accountName),
+        fetchGrowBalance(accountName),
+      ]);
 
-    const stakedBalance =
-      stakedResponse.rows?.length > 0
-        ? stakedResponse.rows[0]?.data?.balance
-        : null;
-    const growBalance =
-      growResponse.rows?.length > 0
-        ? growResponse.rows[0]?.data?.balance
-        : null;
+      const stakedBalance =
+        stakedResponse.rows?.length > 0
+          ? stakedResponse.rows[0]?.data?.balance
+          : null;
+      const growBalance =
+        growResponse.rows?.length > 0
+          ? growResponse.rows[0]?.data?.balance
+          : null;
 
-    setBalances({
-      staked: stakedBalance ?? "0 EMT",
-      grow: growBalance ?? "0 EMT",
-    });
+      setBalances({
+        staked: stakedBalance ?? "0 EMT",
+        grow: growBalance ?? "0 EMT",
+      });
 
-    setIsLoading(false);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      toast({
+        title: "Whoops...",
+        description: `There was an error checking balances: \n\n${getErrorMessage(
+          error
+        )}`,
+      });
+    }
   };
 
   const fetchStakedBalance = async (accountName: string) => {

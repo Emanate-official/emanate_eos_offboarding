@@ -1,18 +1,18 @@
 import { useContext } from "react";
 import { UALContext } from "ual-reactjs-renderer";
-import { useBalances } from "hooks";
+
+import { useToast, useBalances } from "hooks";
+
+import { Input } from "components/Input";
 import { Badge } from "components/Badge";
 import { Button } from "components/Button";
-import { Skeleton } from "components/Skeleton";
-import { useToast } from "hooks";
 import { Balance } from "components/Balance";
-import { Input } from "components/Input";
+import { Skeleton } from "components/Skeleton";
 
 export const SignedIn = () => {
   const { activeUser } = useContext(UALContext) as any;
   const { accountName } = activeUser;
   const { isLoading, balances, checkBalances } = useBalances({ activeUser });
-  const { toast } = useToast();
 
   return (
     <section className="flex justify-center items-center flex-col w-full">
