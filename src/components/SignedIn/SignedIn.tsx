@@ -31,13 +31,14 @@ export const SignedIn = () => {
             onClick={() => {
               // Only check balances if accountName is not null
               // Triggering with an undefined or null value will cause an error.
-              if (accountName) {
-                checkBalances(activeUser.accountName as string);
-              }
-              // toast({
-              //   title: "Scheduled: Catch up",
-              //   description: "Friday, February 10, 2023 at 5:57 PM",
-              // });
+              // if (accountName) {
+              //   checkBalances(activeUser.accountName as string);
+              // }
+              toast({
+                variant: "error",
+                title: "Scheduled: Catch up",
+                description: "Friday, February 10, 2023 at 5:57 PM",
+              });
             }}
           >
             Check Balances
