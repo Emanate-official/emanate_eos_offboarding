@@ -8,6 +8,7 @@ import { Button } from "components/Button";
 
 export const ActionOptions = () => {
   const { activeUser } = useContext(UALContext) as any;
+  const { accountName } = activeUser;
   const { ungrowAction, unstakeAction } = useTransactions({ activeUser });
   const ungrowInputRef = createRef<HTMLInputElement>();
   const unstakeInputRef = createRef<HTMLInputElement>();
@@ -27,7 +28,9 @@ export const ActionOptions = () => {
           <Button
             variant="outline"
             onClick={() => {
-              console.log(ungrowInputRef.current?.value);
+              if (ungrowInputRef.current?.value) {
+                ungrowAction(accountName, ungrowInputRef.current!.value);
+              }
             }}
           >
             UNGROW
@@ -43,7 +46,16 @@ export const ActionOptions = () => {
             placeholder="ex: 100 EMT"
             ref={unstakeInputRef}
           />
-          <Button variant="outline">UNSTAKE</Button>
+          <Button
+            variant="outline"
+            onClick={() => {
+              if (unstakeInputRef.current?.value) {
+                unstakeAction(accountName, unstakeInputRef.current!.value);
+              }
+            }}
+          >
+            UNSTAKE
+          </Button>
         </div>
       </div>
     </div>
