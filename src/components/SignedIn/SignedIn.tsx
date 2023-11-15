@@ -15,7 +15,7 @@ export const SignedIn = () => {
         </Badge>
       </div>
       <div className="flex justify-center mt-10">
-        <Button variant="outline">Check Balance</Button>
+        <Button variant="outline">Check Balances</Button>
       </div>
       {/* {activeUser && !isLoading && balances === null && (
         <button
