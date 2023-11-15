@@ -1,9 +1,16 @@
 import type { AnchorUser } from "ual-anchor";
+import type { SignTransactionResponse } from "universal-authenticator-library";
 import { useToast } from "./useToast";
 import { getErrorMessage } from "utils";
+import { useMemo, useState } from "react";
 
 export const useTransactions = ({ activeUser }: { activeUser: AnchorUser }) => {
   const { toast } = useToast();
+  const [growResponse, setGrowResponse] =
+    useState<SignTransactionResponse | null>(null);
+  const [stakeResponse, setStakeResponse] =
+    useState<SignTransactionResponse | null>(null);
+
   const unstakeAction = async (accountName: string, balance: string) => {
     if (!balance.includes("EMT")) {
       toast({
@@ -39,8 +46,12 @@ export const useTransactions = ({ activeUser }: { activeUser: AnchorUser }) => {
           expireSeconds: 120,
         }
       );
-
-      console.log("Response: ", response);
+      setStakeResponse(response);
+      toast({
+        title: "Success",
+        variant: "success",
+        description: "Transaction Successful",
+      });
     } catch (error) {
       toast({
         title: "Whoops...",
@@ -85,8 +96,12 @@ export const useTransactions = ({ activeUser }: { activeUser: AnchorUser }) => {
           expireSeconds: 120,
         }
       );
-
-      console.log("Response: ", response);
+      setGrowResponse(response);
+      toast({
+        title: "Success",
+        variant: "success",
+        description: "Transaction Successful",
+      });
     } catch (error: any) {
       toast({
         title: "Whoops...",
@@ -96,8 +111,15 @@ export const useTransactions = ({ activeUser }: { activeUser: AnchorUser }) => {
     }
   };
 
-  return {
-    unstakeAction,
-    ungrowAction,
-  };
+  const values = useMemo(
+    () => ({
+      growResponse,
+      stakeResponse,
+      unstakeAction,
+      ungrowAction,
+    }),
+    [growResponse, stakeResponse]
+  );
+
+  return values;
 };
