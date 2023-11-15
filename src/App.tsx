@@ -34,6 +34,7 @@ function App() {
         </h4>
         {!activeUser ? <SignedOut /> : <SignedIn />}
       </div>
+      {/* TODO: Fix Toast Position on Mobile */}
       <Toaster />
     </main>
   );
