@@ -11,7 +11,7 @@ import { Skeleton } from "components/Skeleton";
 import { ActionOptions } from "components/ActionOptions";
 
 export const SignedIn = () => {
-  const { activeUser } = useContext(UALContext) as any;
+  const { activeUser, logout } = useContext(UALContext) as any;
   const { accountName } = activeUser;
   const { isLoading, balances, checkBalances } = useBalances({ activeUser });
 
@@ -24,6 +24,9 @@ export const SignedIn = () => {
           {accountName}
         </Badge>
       </div>
+      <Button variant="outline" className="mt-4" onClick={() => logout()}>
+        Log Out
+      </Button>
 
       {/* Border Spacer */}
       <div className="border w-full my-10"></div>
